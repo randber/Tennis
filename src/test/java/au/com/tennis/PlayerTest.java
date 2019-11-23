@@ -54,9 +54,24 @@ public class PlayerTest {
 
         assertEquals("Number of games won is 1", 1 ,player.getGamesWon());
 
-        assertEquals("toString function containe name and zero scores",
-                "Player{playerName='Alan', gameScore=0, gamesWon=1}",
-                player.toString());
+
     }
+
+    @Test
+    public void testToStringMethod(){
+
+        Player player = new Player("Alan");
+
+        player.winGame();
+        player.scoreGamePoint();
+
+        assertEquals("toString function containe name and gameScore = 1 and gamsWon = 1",
+                "Player{playerName='Alan', gameScore=1, gamesWon=1}",
+                player.toString());
+
+
+    }
+
+
 
 }

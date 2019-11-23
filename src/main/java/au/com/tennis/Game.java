@@ -2,7 +2,8 @@ package au.com.tennis;
 
 public interface Game {
 
-    public void pointWonBy(String team);
+    void pointWonBy(String team);
 
-    public String score();
+    String score();
+
 }

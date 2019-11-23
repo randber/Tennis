@@ -25,17 +25,15 @@ public class Player {
     }
 
 
-    public void scoreGamePoint(){
-
+    public void scoreGamePoint() {
         gameScore++;
-
     }
 
-    public void winGame(){
+    public void winGame() {
         gamesWon++;
     }
 
-    public void startNextMatch(){
+    public void startNextMatch() {
         this.gameScore = 0;
     }
 

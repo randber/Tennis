@@ -1,5 +1,14 @@
 package au.com.tennis;
 
+/**
+ * @author Alan Clarke
+ *
+ * Single set of Tennis score tracker
+ * Assume client will perform input validation and handle the start of new matches
+ *
+ */
+
+
 public class TennisMatch implements Game {
 
     private Player player1;
@@ -10,93 +19,91 @@ public class TennisMatch implements Game {
         this.player2 = new Player(player2);
     }
 
-    public void pointWonBy(String player){
-        if(player1.getPlayerName().equals(player)){
+    public void pointWonBy(String player) {
+        if (player1.getPlayerName().equals(player)) {
             player1.scoreGamePoint();
-        }else {
+        } else {
             player2.scoreGamePoint();
         }
         checkGameScore();
     }
 
-    private void checkGameScore(){
-
-            if(hasGameBeenWon() && !hasMatchBeenWon()){
-                gameLeader().winGame();
-                player1.startNextMatch();
-                player2.startNextMatch();
-            }
-    }
-
-    public String score(){
-
-        String [] score_word = {"0","15", "30", "40"};
+    public String score() {
+        String[] score_word = {"0", "15", "30", "40"};
         String gameScore = player1.getGamesWon() + " - " + player2.getGamesWon();
         String matchScore = "";
 
-        if(hasMatchBeenWon()){
+        if (hasMatchBeenWon()) {
             matchScore = matchWinner().getPlayerName() + " has won the match";
-        } else if(!deuce() && !advantage()){
-            matchScore = score_word[player1.getGameScore()] + " - " + score_word[player2.getGameScore()];
-        } else if (deuce()){
+        } else if (deuce()) {
             matchScore = "Deuce";
         } else if (advantage()) {
             matchScore = gameLeader().getPlayerName() + " has advantage";
+        } else {
+            matchScore = score_word[player1.getGameScore()] + " - " + score_word[player2.getGameScore()];
         }
 
-        return gameScore + " , " +matchScore;
+        return gameScore + " , " + matchScore;
 
+    }
+
+    private void checkGameScore() {
+        if (hasGameBeenWon() && !hasMatchBeenWon()) {
+            gameLeader().winGame();
+            player1.startNextMatch();
+            player2.startNextMatch();
         }
+    }
 
-    private Player gameLeader(){
-        if (player1.getGameScore() > player2.getGameScore()){
+    private Player gameLeader() {
+        if (player1.getGameScore() > player2.getGameScore()) {
             return player1;
         }
         return player2;
     }
 
-    private Player matchWinner(){
-        if (player1.getGamesWon() > player2.getGamesWon()){
+    private Player matchWinner() {
+        if (player1.getGamesWon() > player2.getGamesWon()) {
             return player1;
         }
         return player2;
     }
 
-    private boolean greaterThan3Points(){
+    private boolean greaterThan3Points() {
         return (player1.getGameScore() >= 4 || player2.getGameScore() >= 4);
     }
 
-    private boolean score3Points(){
-        return (player1.getGameScore() >= 3 && player2.getGameScore() >=3);
+    private boolean score3Points() {
+        return (player1.getGameScore() >= 3 && player2.getGameScore() >= 3);
     }
 
-    private boolean deuce(){
-         return ((score3Points() && (player1.getGameScore() == player2.getGameScore())));
-        }
+    private boolean deuce() {
+        return ((score3Points() && (player1.getGameScore() == player2.getGameScore())));
+    }
 
-    private boolean advantage(){
+    private boolean advantage() {
         return ((score3Points() && (player1.getGameScore() != player2.getGameScore())));
     }
 
-    private boolean matchScoreDifference(){
+    private boolean matchScoreDifference() {
         int diff = Math.abs(player1.getGameScore() - player2.getGameScore());
         return (diff >= 2);
     }
 
-    private boolean played6Games(){
+    private boolean played6Games() {
         return (player1.getGamesWon() >= 6 || player2.getGamesWon() >= 6);
     }
 
-    private boolean getSetScoreDiffernce(){
+    private boolean getSetScoreDiffernce() {
         int diff = Math.abs(player1.getGamesWon() - player2.getGamesWon());
         return (diff >= 2);
     }
 
-    private boolean hasGameBeenWon(){
+    private boolean hasGameBeenWon() {
         return (greaterThan3Points() && matchScoreDifference());
     }
 
-    private boolean hasMatchBeenWon(){
+    private boolean hasMatchBeenWon() {
         return ((played6Games()) && getSetScoreDiffernce());
     }
 
